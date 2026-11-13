@@ -59,11 +59,16 @@ br.pc { display: none; }
 /* ===== 헤더 ===== */
 .header {
   position: sticky; top: 0; z-index: 50;
-  background: rgba(247, 243, 236, .9);
-  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
   border-bottom: 1px solid transparent;
   transition: border-color .2s, box-shadow .2s;
 }
+/* 블러는 가상 요소에 걸어야 안쪽의 position:fixed 메뉴가 화면 전체 기준으로 잡힙니다 */
+.header::before {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background: rgba(247, 243, 236, .9);
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+}
+body.menu-open .header::before { background: var(--bg); }
 .header.scrolled { border-color: var(--line); box-shadow: 0 4px 20px rgba(0,0,0,.05); }
 .nav { height: var(--header-h); display: flex; align-items: center; justify-content: space-between; }
 .logo { display: flex; align-items: center; gap: 10px; font-family: "Noto Serif KR", serif; font-weight: 900; font-size: 19px; color: var(--sea-deep); }
@@ -85,7 +90,7 @@ br.pc { display: none; }
   .menu {
     position: fixed; left: 0; right: 0; top: var(--menu-top, 100px); bottom: 0;
     flex-direction: column; align-items: stretch; gap: 0;
-    background: var(--bg); padding: 12px 20px 40px;
+    background: var(--bg); padding: 12px 20px 40px; overflow-y: auto; z-index: 45;
     font-size: 20px; font-weight: 700;
     transform: translateY(-8px); opacity: 0; visibility: hidden;
     transition: opacity .2s, transform .2s, visibility .2s;
