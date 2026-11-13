@@ -1,0 +1,114 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0a1a30"/>
+      <stop offset=".42" stop-color="#1f3d63"/>
+      <stop offset=".7" stop-color="#6f6f8f"/>
+      <stop offset=".88" stop-color="#e3a07a"/>
+      <stop offset="1" stop-color="#f7cd90"/>
+    </linearGradient>
+    <radialGradient id="glow" cx=".5" cy=".5" r=".5">
+      <stop offset="0" stop-color="#ffe3a6" stop-opacity=".95"/>
+      <stop offset=".35" stop-color="#ffc98a" stop-opacity=".45"/>
+      <stop offset="1" stop-color="#ffc98a" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="sea" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#46638a"/>
+      <stop offset=".35" stop-color="#1f3b5e"/>
+      <stop offset="1" stop-color="#0d1f36"/>
+    </linearGradient>
+    <linearGradient id="beach" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3b302b"/>
+      <stop offset="1" stop-color="#14100d"/>
+    </linearGradient>
+    <linearGradient id="fishG" x1="0" x2="1">
+      <stop offset="0" stop-color="#3f1c12"/>
+      <stop offset=".4" stop-color="#8f3f24"/>
+      <stop offset=".58" stop-color="#d08a5c"/>
+      <stop offset=".75" stop-color="#8f3f24"/>
+      <stop offset="1" stop-color="#3a190f"/>
+    </linearGradient>
+    <linearGradient id="reflect" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffd99a" stop-opacity=".8"/>
+      <stop offset="1" stop-color="#ffd99a" stop-opacity="0"/>
+    </linearGradient>
+    <!-- 꽁치 한 줄 패턴: 길이가 다른 두 마리 -->
+    <pattern id="fishRow" width="52" height="150" patternUnits="userSpaceOnUse">
+      <path d="M13 6 c5 2 7 8 7 20 l-1 72 c0 10 -3 18 -6 22 c-3 -4 -6 -12 -6 -22 l-1 -72 c0 -12 2 -18 7 -20z" fill="url(#fishG)"/>
+      <path d="M7 122 l6 -5 l6 5 l-6 9z" fill="#2e140c"/>
+      <path d="M13 0 v8" stroke="#1d120b" stroke-width="2"/>
+      <path d="M39 6 c5 2 7 8 7 18 l-1 62 c0 10 -3 16 -6 20 c-3 -4 -6 -10 -6 -20 l-1 -62 c0 -10 2 -16 7 -18z" fill="url(#fishG)"/>
+      <path d="M33 108 l6 -5 l6 5 l-6 9z" fill="#2e140c"/>
+      <path d="M39 0 v8" stroke="#1d120b" stroke-width="2"/>
+    </pattern>
+    <g id="rack">
+      <path d="M-20 360 L40 0 M640 360 L580 0" stroke="#22170f" stroke-width="7"/>
+      <rect x="0" y="-10" width="9" height="380" fill="#2a1c12"/>
+      <rect x="200" y="-10" width="9" height="380" fill="#2a1c12"/>
+      <rect x="400" y="-10" width="9" height="380" fill="#2a1c12"/>
+      <rect x="600" y="-10" width="9" height="380" fill="#2a1c12"/>
+      <rect x="-14" y="6" width="640" height="7" rx="3" fill="#3a2718"/>
+      <rect x="-14" y="176" width="640" height="7" rx="3" fill="#3a2718"/>
+      <rect x="6" y="12" width="596" height="140" fill="url(#fishRow)"/>
+      <rect x="20" y="182" width="582" height="140" fill="url(#fishRow)"/>
+    </g>
+  </defs>
+
+  <!-- 하늘 -->
+  <rect width="1440" height="600" fill="url(#sky)"/>
+  <g fill="#fff">
+    <circle cx="120" cy="80" r="1.6" opacity=".8"/><circle cx="260" cy="150" r="1.2" opacity=".6"/>
+    <circle cx="420" cy="60" r="1.8" opacity=".7"/><circle cx="610" cy="120" r="1.2" opacity=".5"/>
+    <circle cx="760" cy="40" r="1.5" opacity=".7"/><circle cx="930" cy="110" r="1.1" opacity=".5"/>
+    <circle cx="1120" cy="70" r="1.6" opacity=".6"/><circle cx="1320" cy="140" r="1.2" opacity=".5"/>
+    <circle cx="1380" cy="50" r="1.4" opacity=".7"/><circle cx="60" cy="220" r="1" opacity=".4"/>
+  </g>
+  <!-- 구름 -->
+  <g fill="#f4b88f" opacity=".35">
+    <ellipse cx="300" cy="420" rx="220" ry="14"/>
+    <ellipse cx="420" cy="440" rx="160" ry="9"/>
+    <ellipse cx="1180" cy="380" rx="200" ry="12"/>
+  </g>
+  <!-- 해 -->
+  <circle cx="1060" cy="575" r="300" fill="url(#glow)"/>
+  <circle cx="1060" cy="580" r="62" fill="#ffd690"/>
+
+  <!-- 먼 산 -->
+  <path d="M0 600 V470 Q90 438 190 468 Q280 425 380 462 Q470 446 560 494 Q630 530 720 600Z" fill="#33405e" opacity=".85"/>
+  <path d="M0 600 V520 Q120 495 250 520 Q360 500 470 540 Q540 566 600 600Z" fill="#232e48"/>
+
+  <!-- 바다 -->
+  <rect y="580" width="1440" height="200" fill="url(#sea)"/>
+  <rect x="1010" y="582" width="100" height="160" fill="url(#reflect)" opacity=".6"/>
+  <g stroke="#ffe0a8" stroke-linecap="round" opacity=".55">
+    <path d="M1000 600 h120" stroke-width="3"/><path d="M1020 616 h80" stroke-width="3"/>
+    <path d="M990 634 h140" stroke-width="2"/><path d="M1030 652 h60" stroke-width="2"/>
+    <path d="M1010 672 h100" stroke-width="2"/>
+  </g>
+  <g stroke="#9fb6d3" stroke-width="2" fill="none" stroke-linecap="round" opacity=".25">
+    <path d="M60 620 q30 -8 60 0 t60 0"/><path d="M300 650 q30 -8 60 0 t60 0"/>
+    <path d="M140 700 q30 -8 60 0 t60 0"/><path d="M560 630 q30 -8 60 0 t60 0"/>
+    <path d="M760 690 q30 -8 60 0 t60 0"/><path d="M1250 640 q30 -8 60 0 t60 0"/>
+  </g>
+  <!-- 작은 어선 -->
+  <g transform="translate(420 612)">
+    <path d="M0 0 h70 l-10 14 h-52z" fill="#1a273c"/>
+    <rect x="22" y="-16" width="20" height="16" fill="#1a273c"/>
+    <path d="M32 -16 v-22" stroke="#1a273c" stroke-width="3"/>
+    <circle cx="32" cy="-40" r="3" fill="#ffd690"/>
+  </g>
+
+  <!-- 해변 -->
+  <path d="M0 780 Q360 720 720 735 T1440 720 V900 H0Z" fill="url(#beach)"/>
+
+  <!-- 덕장 -->
+  <use href="#rack" transform="translate(1090 500) scale(.6)" opacity=".75"/>
+  <use href="#rack" transform="translate(640 404) scale(1.1)"/>
+
+  <!-- 갈매기 -->
+  <g stroke="#0e1a2c" stroke-width="3" fill="none" stroke-linecap="round">
+    <path d="M820 230 q10 -10 20 0 q10 -10 20 0"/>
+    <path d="M900 280 q7 -7 14 0 q7 -7 14 0"/>
+    <path d="M1240 200 q9 -9 18 0 q9 -9 18 0"/>
+  </g>
+</svg>

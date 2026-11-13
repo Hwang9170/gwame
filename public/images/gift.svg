@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1b3352"/>
+      <stop offset="1" stop-color="#0e1e33"/>
+    </linearGradient>
+    <linearGradient id="box" x1="0" x2="1">
+      <stop offset="0" stop-color="#8f3420"/>
+      <stop offset=".5" stop-color="#b5482b"/>
+      <stop offset="1" stop-color="#8f3420"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" x2="1">
+      <stop offset="0" stop-color="#a77d2c"/>
+      <stop offset=".5" stop-color="#e2be6a"/>
+      <stop offset="1" stop-color="#a77d2c"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#bg)"/>
+  <g fill="#fff">
+    <circle cx="80" cy="90" r="3" opacity=".6"/><circle cx="180" cy="200" r="2" opacity=".5"/>
+    <circle cx="700" cy="120" r="3" opacity=".6"/><circle cx="620" cy="60" r="2" opacity=".5"/>
+    <circle cx="740" cy="300" r="2.5" opacity=".5"/><circle cx="60" cy="380" r="2.5" opacity=".5"/>
+    <circle cx="360" cy="60" r="2" opacity=".5"/><circle cx="500" cy="150" r="2" opacity=".4"/>
+    <circle cx="130" cy="520" r="2" opacity=".4"/><circle cx="700" cy="500" r="3" opacity=".5"/>
+  </g>
+  <!-- 바닥 -->
+  <rect y="490" width="800" height="110" fill="#0a1626"/>
+  <ellipse cx="400" cy="500" rx="260" ry="20" fill="#000" opacity=".35"/>
+  <!-- 상자 몸통 -->
+  <rect x="180" y="270" width="440" height="228" rx="8" fill="url(#box)"/>
+  <rect x="372" y="270" width="56" height="228" fill="url(#gold)"/>
+  <!-- 뚜껑 -->
+  <rect x="166" y="222" width="468" height="70" rx="10" fill="#c5573a"/>
+  <rect x="166" y="276" width="468" height="16" fill="#000" opacity=".12"/>
+  <rect x="372" y="222" width="56" height="70" fill="url(#gold)"/>
+  <!-- 매듭 -->
+  <path d="M400 222 C340 140 270 170 300 214 C320 238 370 230 400 222Z" fill="url(#gold)"/>
+  <path d="M400 222 C460 140 530 170 500 214 C480 238 430 230 400 222Z" fill="url(#gold)"/>
+  <path d="M400 226 C380 260 360 290 350 320 L372 318 C380 290 392 262 400 236Z" fill="#a77d2c"/>
+  <path d="M400 226 C420 260 440 290 450 320 L428 318 C420 290 408 262 400 236Z" fill="#a77d2c"/>
+  <circle cx="400" cy="222" r="20" fill="#d9b25c"/>
+  <!-- 라벨 -->
+  <rect x="224" y="340" width="120" height="120" rx="6" fill="#f6efe0"/>
+  <rect x="232" y="348" width="104" height="104" rx="4" fill="none" stroke="#b5482b" stroke-width="2"/>
+  <text x="284" y="398" text-anchor="middle" font-family="Noto Serif KR, Batang, serif" font-weight="900" font-size="30" fill="#1d2430">과메기</text>
+  <text x="284" y="428" text-anchor="middle" font-family="Noto Sans KR, Malgun Gothic, sans-serif" font-size="13" fill="#b5482b" letter-spacing="2">GIFT SET</text>
+  <!-- 솔잎 -->
+  <g transform="translate(520 380)" stroke="#2f6b46" stroke-width="5" stroke-linecap="round">
+    <path d="M0 60 L40 -20"/>
+    <path d="M10 40 l-26 -16 M16 28 l-24 -20 M22 16 l-22 -22 M28 4 l-18 -24 M14 40 l20 -24 M20 28 l22 -20 M26 16 l20 -24 M32 4 l16 -26"/>
+  </g>
+  <circle cx="560" cy="440" r="10" fill="#d23a24"/>
+  <circle cx="576" cy="452" r="8" fill="#d23a24"/>
+</svg>

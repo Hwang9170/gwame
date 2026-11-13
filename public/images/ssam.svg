@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
+  <defs>
+    <linearGradient id="meat" x1="0" x2="1">
+      <stop offset="0" stop-color="#6b2a18"/>
+      <stop offset=".5" stop-color="#b4502e"/>
+      <stop offset=".75" stop-color="#d98a5f"/>
+      <stop offset="1" stop-color="#7b3520"/>
+    </linearGradient>
+    <style>
+      text { font-family: "Noto Sans KR", "Malgun Gothic", "Apple SD Gothic Neo", sans-serif; font-size: 22px; font-weight: 700; fill: #1d2430; }
+      .ln { stroke: #b5482b; stroke-width: 2; stroke-dasharray: 4 5; }
+    </style>
+  </defs>
+  <!-- 그림자 -->
+  <ellipse cx="230" cy="600" rx="190" ry="22" fill="#000" opacity=".12"/>
+
+  <!-- 1. 김 -->
+  <g transform="translate(230 520)">
+    <path d="M0 -60 L190 0 L0 60 L-190 0Z" fill="#24332a"/>
+    <path d="M0 60 L190 0 v10 L0 70 L-190 10 v-10Z" fill="#141d18"/>
+    <path d="M-80 -10 l90 26 M-20 -30 l100 30" stroke="#3d5546" stroke-width="2"/>
+  </g>
+  <!-- 2. 배추 -->
+  <g transform="translate(230 430)">
+    <path d="M0 -56 C80 -50 170 -20 180 0 C150 30 80 56 0 56 C-90 50 -170 20 -180 0 C-160 -30 -80 -56 0 -56Z" fill="#eef3c7"/>
+    <path d="M-150 0 C-60 -6 60 -4 160 0" stroke="#fffbe8" stroke-width="10" stroke-linecap="round"/>
+    <path d="M-180 0 C-160 -30 -80 -56 0 -56 C-60 -40 -130 -20 -180 0Z" fill="#9cc46a"/>
+  </g>
+  <!-- 3. 미역 -->
+  <g transform="translate(230 344)">
+    <path d="M-170 0 C-140 -30 -100 -10 -70 -36 C-40 -54 0 -30 30 -48 C70 -60 110 -30 170 -6 C150 20 110 30 80 46 C40 56 0 36 -40 50 C-90 60 -130 30 -170 0Z" fill="#2d5b3a"/>
+    <path d="M-140 4 C-60 -10 40 10 140 -6" stroke="#3f7a4e" stroke-width="5" fill="none"/>
+  </g>
+  <!-- 4. 과메기 -->
+  <g transform="translate(230 262)">
+    <g transform="rotate(-70)">
+      <rect x="-22" y="-80" width="44" height="160" rx="20" fill="url(#meat)" transform="translate(-14 -10)"/>
+      <rect x="-22" y="-80" width="44" height="160" rx="20" fill="url(#meat)" transform="translate(30 20)"/>
+      <rect x="-12" y="-70" width="8" height="120" rx="4" fill="#fff" opacity=".25" transform="translate(-14 -10)"/>
+    </g>
+  </g>
+  <!-- 5. 쪽파 마늘 고추 -->
+  <g transform="translate(230 176)">
+    <g stroke-linecap="round" stroke-width="9">
+      <path d="M-120 10 L60 -24" stroke="#4f9a3c"/>
+      <path d="M-110 26 L80 -6" stroke="#5aa845"/>
+    </g>
+    <g fill="#fbf4dd" stroke="#e1d3a8" stroke-width="2">
+      <ellipse cx="80" cy="18" rx="16" ry="11"/><ellipse cx="116" cy="4" rx="14" ry="10"/>
+    </g>
+    <g fill="#e8f3d3" stroke-width="6">
+      <circle cx="-30" cy="-26" r="11" stroke="#3f8a33"/>
+      <circle cx="0" cy="30" r="11" stroke="#d23a24"/>
+      <circle cx="-150" cy="-6" r="10" stroke="#3f8a33"/>
+    </g>
+  </g>
+  <!-- 6. 초장 -->
+  <g transform="translate(230 86)">
+    <path d="M0 -44 C18 -14 30 0 30 16 C30 34 16 44 0 44 C-16 44 -30 34 -30 16 C-30 0 -18 -14 0 -44Z" fill="#c4301c"/>
+    <ellipse cx="-10" cy="12" rx="7" ry="10" fill="#fff" opacity=".35"/>
+  </g>
+
+  <!-- 라벨 -->
+  <path class="ln" d="M270 86 H470"/><text x="480" y="94">초장</text>
+  <path class="ln" d="M360 176 H470"/><text x="480" y="184">쪽파·마늘·고추</text>
+  <path class="ln" d="M400 262 H470"/><text x="480" y="270">과메기</text>
+  <path class="ln" d="M400 344 H470"/><text x="480" y="352">미역</text>
+  <path class="ln" d="M410 430 H470"/><text x="480" y="438">배추</text>
+  <path class="ln" d="M420 520 H470"/><text x="480" y="528">김</text>
+</svg>
