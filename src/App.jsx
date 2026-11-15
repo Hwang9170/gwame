@@ -29,6 +29,8 @@ export default function App() {
     setCart((c) => ({ ...c, [id]: Math.max(0, Math.min(99, c[id] + delta)) }));
   }, []);
 
+  const resetCart = useCallback(() => setCart((c) => Object.fromEntries(Object.keys(c).map((k) => [k, 0]))), []);
+
   const addToCart = (p) => {
     changeQty(p.id, 1);
     showToast(`${p.name} 담았어요 (${cart[p.id] + 1}개)`);
@@ -61,7 +63,7 @@ export default function App() {
         <HowTo />
         <Nutrition />
         <Faq />
-        <Order cart={cart} onChangeQty={changeQty} showToast={showToast} />
+        <Order cart={cart} onChangeQty={changeQty} onReset={resetCart} showToast={showToast} />
       </main>
       <Footer />
       <MobileBar show={pastHero} count={count} />

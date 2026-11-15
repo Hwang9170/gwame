@@ -34,10 +34,14 @@ function QtyRow({ item, sub, qty, onChange }) {
   );
 }
 
-export default function Order({ cart, onChangeQty, showToast }) {
+export default function Order({ cart, onChangeQty, onReset, showToast }) {
   const [info, setInfo] = useState({ name: '', phone: '', address: '', memo: '' });
   const [dateKey, setDateKey] = useState('');
+  const [agree, setAgree] = useState(false);
   const [msg, setMsg] = useState('');
+  const [busy, setBusy] = useState(false);
+  const [done, setDone] = useState(null);       // 접수 완료된 주문
+  const [apiDown, setApiDown] = useState(false); // 서버 주문이 안 될 때 문자 주문 안내
 
   const dates = useMemo(() => availableDates(), []);
   const picked = dates.find((d) => d.key === dateKey);
@@ -68,6 +72,37 @@ export default function Order({ cart, onChangeQty, showToast }) {
     if (!picked) return '받으실 날짜를 골라주세요.';
     if (!info.name.trim() || !info.phone.trim() || !info.address.trim()) return '이름, 연락처, 주소를 모두 적어주세요.';
     return '';
+  };
+
+  const submit = async () => {
+    const err = validate() || (!agree && '개인정보 수집·이용에 동의해 주세요.');
+    if (err) { setMsg(err); return; }
+    setBusy(true);
+    setMsg('');
+    try {
+      const r = await fetch('/api/orders', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...info, receiveDate: dateKey, agree, items: cart }),
+      });
+      const j = await r.json().catch(() => ({}));
+      if (!r.ok) {
+        if (r.status >= 500 || !j.error) setApiDown(true);
+        setMsg(j.error || '주문을 접수하지 못했어요.');
+        return;
+      }
+      setDone({ ...j, items: ITEMS.filter((p) => cart[p.id] > 0).map((p) => `${p.name} ${cart[p.id]}개`) });
+      onReset();
+      setInfo({ name: '', phone: '', address: '', memo: '' });
+      setDateKey('');
+      setAgree(false);
+      document.getElementById('order')?.scrollIntoView({ behavior: 'smooth' });
+    } catch {
+      setApiDown(true);
+      setMsg('인터넷 연결을 확인해 주세요.');
+    } finally {
+      setBusy(false);
+    }
   };
 
   const update = (e) => {
@@ -102,11 +137,30 @@ export default function Order({ cart, onChangeQty, showToast }) {
         <div className="head center reveal">
           <p className="eyebrow light">ORDER</p>
           <h2 className="title">간편 주문</h2>
-          <p className="desc">상품과 받을 날짜를 고르고 정보를 적으면 주문 문자가 자동으로 만들어집니다.</p>
+          <p className="desc">상품과 받을 날짜를 고르고 정보를 적으면 바로 주문이 접수됩니다.</p>
         </div>
 
         <div className="order-wrap">
-          <form className="order-form reveal" noValidate onSubmit={(e) => e.preventDefault()}>
+          {done ? (
+            <div className="order-form order-done">
+              <div className="done-icon" aria-hidden="true">✓</div>
+              <h3>주문이 접수되었어요</h3>
+              <dl>
+                <div><dt>주문번호</dt><dd>{done.id}</dd></div>
+                <div><dt>상품</dt><dd>{done.items.join(', ')}</dd></div>
+                <div><dt>받으실 날짜</dt><dd>{fmtDate(new Date(done.receiveDate + 'T00:00'))}</dd></div>
+                <div className="em"><dt>입금하실 금액</dt><dd>{won(done.total)}</dd></div>
+                <div><dt>입금 계좌</dt><dd>{SHOP.bank}<br />예금주 {SHOP.owner}</dd></div>
+              </dl>
+              <p className="date-note">
+                발송 전날 오후 {DELIVERY.cutoffHour - 12}시까지 입금해 주세요. 입금 확인 후 발송하며,
+                발송되면 송장번호를 문자로 보내드려요.
+                {!done.buyerNotified && ' (안내 문자가 가지 않았다면 이 화면을 캡처해 두세요.)'}
+              </p>
+              <button type="button" className="btn btn-ghost" onClick={() => setDone(null)}>추가로 주문하기</button>
+            </div>
+          ) : (
+          <form className="order-form reveal in" noValidate onSubmit={(e) => { e.preventDefault(); submit(); }}>
             <h3>1. 상품 선택</h3>
             <div className="qty-list">
               {PRODUCTS.map((p) => <QtyRow key={p.id} item={p} qty={cart[p.id]} onChange={change} />)}
@@ -156,12 +210,29 @@ export default function Order({ cart, onChangeQty, showToast }) {
               <span>합계</span>
               <strong>{won(total)}</strong>
             </div>
-            <div className="order-btns">
-              <a className="btn btn-accent" href={smsHref} onClick={onSms}>문자로 주문 보내기</a>
-              <button className="btn btn-ghost" type="button" onClick={onCopy}>주문 내용 복사</button>
-            </div>
+            <label className="agree">
+              <input type="checkbox" checked={agree} onChange={(e) => { setAgree(e.target.checked); setMsg(''); }} />
+              <span>
+                <b>[필수]</b> 개인정보 수집·이용에 동의합니다.
+                <small>
+                  수집 항목: 이름, 연락처, 주소 · 목적: 주문 처리와 배송, 배송 안내 문자 발송 ·
+                  배송을 위해 택배사에 제공 · 보관: 배송 완료 후 1년
+                </small>
+              </span>
+            </label>
+
+            <button className="btn btn-accent order-submit" type="submit" disabled={busy}>
+              {busy ? '주문 접수 중…' : `${won(total)} 주문하기`}
+            </button>
             <p className="form-msg" role="status">{msg}</p>
+            {apiDown && (
+              <div className="order-btns">
+                <a className="btn btn-ghost" href={smsHref} onClick={onSms}>문자로 주문하기</a>
+                <button className="btn btn-ghost" type="button" onClick={onCopy}>주문 내용 복사</button>
+              </div>
+            )}
           </form>
+          )}
 
           <aside className="contact reveal">
             <a className="contact-card" href={`tel:${SHOP.phone}`}>

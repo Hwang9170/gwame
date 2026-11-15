@@ -46,6 +46,19 @@ export const PRODUCTS = [
   },
 ];
 
+/* ==========================================================
+   택배사 — 계약한 택배사로 COURIER 값을 바꾸세요.
+   trackingUrl: 손님에게 보내는 배송조회 링크 (실제 송장으로 한 번 확인 필요)
+   sweetCode: 배송현황 자동 조회(스마트택배 API)용 택배사 코드
+   ========================================================== */
+export const COURIERS = {
+  cj: { name: 'CJ대한통운', sweetCode: '04', trackingUrl: (no) => `https://trace.cjlogistics.com/next/tracking.html?wblNo=${no}` },
+  epost: { name: '우체국택배', sweetCode: '01', trackingUrl: (no) => `https://service.epost.go.kr/trace.RetrieveDomRigiTraceList.comm?sid1=${no}` },
+  hanjin: { name: '한진택배', sweetCode: '05', trackingUrl: (no) => `https://www.hanjin.com/kor/CMS/DeliveryMgr/WaybillResult.do?mCode=MN038&schLang=KR&wblnumText2=${no}` },
+  lotte: { name: '롯데택배', sweetCode: '08', trackingUrl: (no) => `https://www.lotteglogis.com/home/reservation/tracking/linkView?InvNo=${no}` },
+};
+export const COURIER = COURIERS.cj;
+
 // 추가 옵션 — 가격은 예시입니다.
 export const ADDONS = [
   { id: 'gim', name: '김 추가', unit: '1봉 (10장)', price: 3000 },
@@ -73,8 +86,19 @@ export const ymd = (d) => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.g
 const addDays = (d, n) => new Date(d.getFullYear(), d.getMonth(), d.getDate() + n);
 export const fmtDate = (d) => `${d.getMonth() + 1}/${d.getDate()} (${'일월화수목금토'[d.getDay()]})`;
 
-// 고를 수 있는 받을 날짜 목록: [{ key, receive, ship }]
-export function availableDates(now = new Date()) {
+// 기기 시간대와 상관없이 "한국 시각"의 연·월·일·시를 그대로 가진 Date (서버는 UTC로 돌기 때문)
+export function kstNow(real = new Date()) {
+  return new Date(real.getTime() + (9 * 60 + real.getTimezoneOffset()) * 60000);
+}
+export const kstToday = () => ymd(kstNow());
+export const shiftYmd = (key, n) => {
+  const [y, m, d] = key.split('-').map(Number);
+  return ymd(new Date(y, m - 1, d + n));
+};
+
+// 고를 수 있는 받을 날짜 목록: [{ key, shipKey, receive, ship }]
+export function availableDates(real = new Date()) {
+  const now = kstNow(real);
   const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
   const out = [];
   for (let i = 2; i <= DELIVERY.daysAhead; i++) {
@@ -86,9 +110,18 @@ export function availableDates(now = new Date()) {
     const cutoff = addDays(ship, -1);
     cutoff.setHours(DELIVERY.cutoffHour);
     if (now >= cutoff) continue;
-    out.push({ key: ymd(receive), receive, ship });
+    out.push({ key: ymd(receive), shipKey: ymd(ship), receive, ship });
   }
   return out;
 }
 
 export const won = (n) => n.toLocaleString('ko-KR') + '원';
+export const ALL_ITEMS = [...PRODUCTS, ...ADDONS];
+
+export const ORDER_STATUS = {
+  pending: '입금 대기',
+  paid: '입금 확인',
+  shipped: '발송 완료',
+  delivered: '배송 완료',
+  cancelled: '취소',
+};
