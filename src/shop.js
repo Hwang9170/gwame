@@ -46,4 +46,49 @@ export const PRODUCTS = [
   },
 ];
 
+// 추가 옵션 — 가격은 예시입니다.
+export const ADDONS = [
+  { id: 'gim', name: '김 추가', unit: '1봉 (10장)', price: 3000 },
+  { id: 'veg', name: '야채 추가', unit: '배추·미역·쪽파 2인분', price: 5000 },
+  { id: 'garlic', name: '마늘·고추 추가', unit: '1팩', price: 2000 },
+  { id: 'sauce', name: '초장 추가', unit: '1개', price: 1000 },
+];
+
+/* ==========================================================
+   배송 일정 규칙
+   - 손님은 "받을 날짜"를 고르고, 그 전날 발송합니다.
+   - 발송 전날 CUTOFF_HOUR시에 그날 보낼 주문을 마감·종합합니다.
+   ========================================================== */
+export const DELIVERY = {
+  shipWeekdays: [1, 2, 3, 4], // 발송 요일: 월~목 (신선식품이라 금·토 발송은 하지 않음 → 화~금 도착)
+  cutoffHour: 18,             // 발송 전날 오후 6시 마감
+  daysAhead: 21,              // 오늘부터 며칠 뒤까지 고를 수 있는지
+  seasonEnd: '2027-02-28',    // 판매 마감일 (이후 날짜는 선택 불가)
+  // 발송하지 않는 날 (공휴일, 휴무일). 'YYYY-MM-DD' 형식으로 추가하세요.
+  closedDays: ['2026-12-25', '2027-01-01'],
+};
+
+const pad = (n) => String(n).padStart(2, '0');
+export const ymd = (d) => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+const addDays = (d, n) => new Date(d.getFullYear(), d.getMonth(), d.getDate() + n);
+export const fmtDate = (d) => `${d.getMonth() + 1}/${d.getDate()} (${'일월화수목금토'[d.getDay()]})`;
+
+// 고를 수 있는 받을 날짜 목록: [{ key, receive, ship }]
+export function availableDates(now = new Date()) {
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const out = [];
+  for (let i = 2; i <= DELIVERY.daysAhead; i++) {
+    const receive = addDays(today, i);
+    const ship = addDays(receive, -1);
+    if (ymd(receive) > DELIVERY.seasonEnd) break;
+    if (!DELIVERY.shipWeekdays.includes(ship.getDay())) continue;
+    if (DELIVERY.closedDays.includes(ymd(ship))) continue;
+    const cutoff = addDays(ship, -1);
+    cutoff.setHours(DELIVERY.cutoffHour);
+    if (now >= cutoff) continue;
+    out.push({ key: ymd(receive), receive, ship });
+  }
+  return out;
+}
+
 export const won = (n) => n.toLocaleString('ko-KR') + '원';

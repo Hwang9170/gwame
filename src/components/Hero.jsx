@@ -17,7 +17,7 @@ const Hero = forwardRef(function Hero(_, ref) {
           겨울 바닷바람이<br />빚어낸 <em>쫀득한 맛</em>
         </h1>
         <p className="lead">
-          찬 해풍에 얼었다 녹기를 반복하며 보름 동안 말린 과메기.<br className="pc" />
+          찬 해풍에 얼었다 녹기를 반복하며 보름 동안 말린 과메기.{' '}<br className="pc" />
           덕장에서 바로 손질해 식탁까지 보내드립니다.
         </p>
         <div className="hero-btns">

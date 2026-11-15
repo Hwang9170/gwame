@@ -7,8 +7,8 @@ const FEATURES = [
     icon: <svg viewBox="0 0 48 48" {...icon}><path d="M6 18h24a6 6 0 1 0-6-6" /><path d="M6 26h32a6 6 0 1 1-6 6" /><path d="M6 34h14" /></svg>,
   },
   {
-    title: '당일 손질 · 당일 발송',
-    text: '미리 손질해 두지 않습니다. 주문이 들어온 날 손질하고 바로 보내드립니다.',
+    title: '받을 날짜 지정 · 발송일 손질',
+    text: '원하시는 날짜에 받도록 보내드립니다. 미리 손질해 두지 않고, 보내는 날 손질해 바로 포장합니다.',
     icon: <svg viewBox="0 0 48 48" {...icon}><circle cx="24" cy="24" r="17" /><path d="M24 14v10l7 5" /></svg>,
   },
   {

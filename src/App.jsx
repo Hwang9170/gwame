@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { PRODUCTS } from './shop.js';
+import { ADDONS, PRODUCTS } from './shop.js';
 import useReveal from './hooks/useReveal.js';
 import Header from './components/Header.jsx';
 import Hero from './components/Hero.jsx';
@@ -18,7 +18,7 @@ import Toast from './components/Toast.jsx';
 export default function App() {
   useReveal();
 
-  const [cart, setCart] = useState(() => Object.fromEntries(PRODUCTS.map((p) => [p.id, 0])));
+  const [cart, setCart] = useState(() => Object.fromEntries([...PRODUCTS, ...ADDONS].map((p) => [p.id, 0])));
   const [toast, setToast] = useState({ msg: '', id: 0 });
   const [pastHero, setPastHero] = useState(false);
   const heroRef = useRef(null);
@@ -44,12 +44,12 @@ export default function App() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  const count = Object.values(cart).reduce((a, b) => a + b, 0);
+  const count = PRODUCTS.reduce((a, p) => a + cart[p.id], 0);
 
   return (
     <>
       <div className="topbar">
-        <div className="wrap">🐟 <b>2026 햇과메기 출하 시작</b> · 오후 2시 이전 주문 당일 발송</div>
+        <div className="wrap">🐟 <b>2026 햇과메기 출하 시작</b> · 받을 날짜를 골라 주문하세요</div>
       </div>
       <Header />
       <main id="top">
